@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { Suspense } from 'react'
 import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm'
 
 export const metadata: Metadata = {
@@ -26,7 +27,9 @@ export default function ResetPasswordPage() {
             </p>
           </div>
 
-          <ResetPasswordForm />
+          <Suspense fallback={<div>Loading...</div>}>
+            <ResetPasswordForm />
+          </Suspense>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-400">
