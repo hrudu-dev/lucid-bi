@@ -41,21 +41,21 @@ export function QueryInterface({ onQuery, isLoading }: QueryInterfaceProps) {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Query Builder</h2>
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Query Builder</h2>
         <div className="flex items-center space-x-2">
           <Button
             variant={mode === 'natural' ? 'default' : 'outline'}
-            onClick={() => setMode('natural')}
             size="sm"
+            onClick={() => setMode('natural')}
           >
             Natural Language
           </Button>
           <Button
             variant={mode === 'sql' ? 'default' : 'outline'}
-            onClick={() => setMode('sql')}
             size="sm"
+            onClick={() => setMode('sql')}
           >
             SQL
           </Button>
@@ -114,30 +114,35 @@ export function QueryInterface({ onQuery, isLoading }: QueryInterfaceProps) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 md:grid-cols-1">
+          <div className="space-y-4">
             {sampleQueries.map((sample, index) => (
               <div key={index} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-2">
-                    <h3 className="font-semibold">{sample.title}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {sample.description}
-                    </p>
-                    <code className="text-xs bg-muted p-2 rounded block">
+                <div className="space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                    <div className="space-y-2 flex-1">
+                      <h3 className="font-semibold">{sample.title}</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {sample.description}
+                      </p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setQuery(sample.sql)
+                        setMode('sql')
+                      }}
+                      className="w-full sm:w-auto"
+                    >
+                      <FileText className="h-4 w-4 mr-2" />
+                      Use
+                    </Button>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <code className="text-xs bg-muted p-2 rounded block whitespace-pre-wrap break-all">
                       {sample.sql}
                     </code>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setQuery(sample.sql)
-                      setMode('sql')
-                    }}
-                  >
-                    <FileText className="h-4 w-4 mr-2" />
-                    Use
-                  </Button>
                 </div>
               </div>
             ))}

@@ -13,6 +13,7 @@ export default function Dashboard() {
   const [insights, setInsights] = useState<Insight[]>([])
   const [queryResults, setQueryResults] = useState<QueryResult | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   const handleQuery = async (query: string) => {
     setIsLoading(true)
@@ -76,13 +77,25 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      <div className="flex">
+      <Header 
+        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        isSidebarOpen={isSidebarOpen}
+      />
+      <div className="flex relative">
         <Sidebar 
           currentView={currentView} 
-          onViewChange={setCurrentView} 
+          onViewChange={setCurrentView}
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
         />
-        <main className="flex-1 p-6">
+        {/* Overlay for mobile */}
+        {isSidebarOpen && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 min-h-screen">
           {currentView === 'dashboard' && (
             <MainContent 
               queryResults={queryResults}

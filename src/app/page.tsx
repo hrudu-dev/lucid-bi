@@ -1,9 +1,6 @@
-import Dashboard from '@/components/dashboard/Dashboard'
+import { redirect } from 'next/navigation'
 
 export default function Home() {
-  return (
-    <main className="min-h-screen">
-      <Dashboard />
-    </main>
-  )
+  // This will be handled by middleware, but adding redirect as fallback
+  redirect('/login')
 }
